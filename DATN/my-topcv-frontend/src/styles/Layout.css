@@ -1,0 +1,64 @@
+/* Layout.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6fa;
+  color: #333;
+}
+
+header {
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+nav a {
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+nav a:hover {
+  background-color: #eef4ff;
+  color: #007bff;
+}
+
+footer {
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
