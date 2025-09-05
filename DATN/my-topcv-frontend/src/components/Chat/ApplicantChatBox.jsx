@@ -31,7 +31,9 @@ const ApplicantChatBox = ({ employerId, conversationId }) => {
     const fetchMessages = async () => {
       if (!conversationId) return;
       try {
-        const res = await axiosInstance.get(`/messages/conversation/${conversationId}`);
+        const res = await axiosInstance.get(
+          `/messages/conversation/${conversationId}`
+        );
         setMessages(res.data);
       } catch (err) {
         console.error("Lỗi khi tải tin nhắn:", err);
@@ -44,7 +46,11 @@ const ApplicantChatBox = ({ employerId, conversationId }) => {
   useEffect(() => {
     const handleReceiveMessage = (newMessage) => {
       if (newMessage.conversationId === conversationId) {
-        setMessages((prev) => [...prev, newMessage]);
+        setMessages((prev) => {
+          // tránh thêm trùng
+          if (prev.some((m) => m._id === newMessage._id)) return prev;
+          return [...prev, newMessage];
+        });
       }
     };
     socket.on("receive_message", handleReceiveMessage);
@@ -67,14 +73,15 @@ const ApplicantChatBox = ({ employerId, conversationId }) => {
       const res = await axiosInstance.post("/messages", msgData);
       const savedMessage = res.data;
 
-      // Gửi qua socket
+      // 👉 Chỉ emit, không setMessages trực tiếp
       socket.emit("send_message", savedMessage);
 
-      // Thêm vào UI ngay cho người gửi
-      setMessages((prev) => [...prev, savedMessage]);
       setMessage("");
     } catch (err) {
-      console.error("❌ Lỗi khi gửi tin nhắn:", err.response?.data || err.message);
+      console.error(
+        "❌ Lỗi khi gửi tin nhắn:",
+        err.response?.data || err.message
+      );
     }
   };
 
@@ -82,10 +89,14 @@ const ApplicantChatBox = ({ employerId, conversationId }) => {
     <div className="chat-box">
       <h3>Chat với nhà tuyển dụng</h3>
       <div className="messages">
-        {messages.map((msg, i) => (
+        {messages.map((msg) => (
           <p
-            key={msg._id || i}
-            className={msg.senderId === currentUser._id ? "message sent" : "message received"}
+            key={msg._id}
+            className={
+              msg.senderId === currentUser._id
+                ? "message sent"
+                : "message received"
+            }
           >
             {msg.text}
           </p>

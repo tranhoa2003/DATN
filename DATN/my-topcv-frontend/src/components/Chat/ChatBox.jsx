@@ -1,4 +1,3 @@
-// frontend/src/components/Chat/ChatBox.jsx
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
 import { socket } from "../../socket";
@@ -30,11 +29,15 @@ const ChatBox = ({ currentUserId }) => {
     if (!conversationId) return;
 
     socket.emit("join_conversation", conversationId);
-    console.log("👉 Employer joined conversation:", conversationId);
+    console.log("👉 Joined conversation:", conversationId);
 
     const handleReceiveMessage = (msg) => {
       if (msg.conversationId === conversationId) {
-        setMessages((prev) => [...prev, msg]);
+        setMessages((prev) => {
+          // tránh thêm trùng tin nhắn
+          if (prev.some((m) => m._id === msg._id)) return prev;
+          return [...prev, msg];
+        });
       }
     };
 
@@ -50,7 +53,9 @@ const ChatBox = ({ currentUserId }) => {
     const fetchMessages = async () => {
       if (conversationId) {
         try {
-          const res = await axiosInstance.get(`/messages/conversation/${conversationId}`);
+          const res = await axiosInstance.get(
+            `/messages/conversation/${conversationId}`
+          );
           setMessages(res.data);
         } catch (err) {
           console.error("❌ Lỗi khi tải tin nhắn:", err);
@@ -81,8 +86,8 @@ const ChatBox = ({ currentUserId }) => {
       const res = await axiosInstance.post("/messages", msgData);
       const savedMessage = res.data;
 
+      // 👉 Chỉ emit, không push vào state ở đây
       socket.emit("send_message", savedMessage);
-      setMessages((prev) => [...prev, savedMessage]);
       setMessage("");
     } catch (err) {
       console.error("❌ Không gửi được tin nhắn:", err);
@@ -98,7 +103,9 @@ const ChatBox = ({ currentUserId }) => {
 
   return (
     <div className="chatbox-container">
-      <button className="chatbox-toggle" onClick={toggleChat}>💬</button>
+      <button className="chatbox-toggle" onClick={toggleChat}>
+        💬
+      </button>
 
       {isChatBoxOpen && (
         <div className="chatbox-panel">
@@ -108,13 +115,17 @@ const ChatBox = ({ currentUserId }) => {
           </div>
 
           <div className="chatbox-messages">
-            {messages.map((msg, i) => (
+            {messages.map((msg) => (
               <div
-                key={msg._id || i}
-                className={`chat-message ${msg.senderId === currentUserId ? "sent" : "received"}`}
+                key={msg._id} // luôn dùng _id để tránh trùng
+                className={`chat-message ${
+                  msg.senderId === currentUserId ? "sent" : "received"
+                }`}
               >
                 <p>{msg.text}</p>
-                <span className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                <span className="timestamp">
+                  {new Date(msg.timestamp).toLocaleTimeString()}
+                </span>
               </div>
             ))}
             <div ref={messagesEndRef} />
