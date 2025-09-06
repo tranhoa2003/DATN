@@ -1,88 +1,135 @@
 // src/components/Layout.jsx
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
-import ChatBox from './Chat/ChatBox'; // <-- thêm ChatBox
-import '../styles/Layout.css'; // Đảm bảo file CSS này được sử dụng đúng
+import ChatBox from './Chat/ChatBox';
+import '../styles/Layout.css';
 
 export default function Layout() {
   const { currentUser } = useContext(AuthContext);
+
+  // Class chung cho NavLink
+  const navLinkClass = ({ isActive }) =>
+    `text-gray-700 hover:text-blue-600 transition-colors ${
+      isActive ? 'active' : ''
+    }`;
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
       <header className="bg-white shadow-md py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
+          {/* Logo */}
           <h1 className="text-2xl font-bold text-blue-600">
-            <Link to="/">MyRecruit</Link>
+            <NavLink to="/" className={navLinkClass}>
+              MyRecruit
+            </NavLink>
           </h1>
 
+          {/* Navbar */}
           <nav className="space-x-4 text-sm">
             {/* Always Visible */}
-            <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Trang chủ</Link>
-            <Link to="/jobs" className="text-gray-700 hover:text-blue-600 transition-colors">Công việc</Link>
+            <NavLink to="/" className={navLinkClass}>
+              Trang chủ
+            </NavLink>
+            <NavLink to="/jobs" className={navLinkClass}>
+              Công việc
+            </NavLink>
 
             {/* Not Logged In */}
             {!currentUser && (
               <>
-                <Link to="/login" className="text-gray-700 hover:text-blue-600 transition-colors">Đăng nhập</Link>
-                <Link to="/register" className="text-gray-700 hover:text-blue-600 transition-colors">Đăng ký</Link>
+                <NavLink to="/login" className={navLinkClass}>
+                  Đăng nhập
+                </NavLink>
+                <NavLink to="/register" className={navLinkClass}>
+                  Đăng ký
+                </NavLink>
               </>
             )}
 
             {/* Logged In */}
             {currentUser && (
               <>
-                {/* Links for Applicant only */}
-                {currentUser.role === 'applicant' && ( // 👈 Cụ thể chỉ cho "applicant"
+                {/* Applicant only */}
+                {currentUser.role === 'applicant' && (
                   <>
-                    <Link to="/user-profile" className="text-gray-700 hover:text-blue-600 transition-colors">Hồ sơ</Link>
-                    <Link to="/cvs" className="text-gray-700 hover:text-blue-600 transition-colors">CV của tôi</Link>
-                    <Link to="/create-cv" className="text-gray-700 hover:text-blue-600 transition-colors">Tạo CV</Link>
-                    <Link to="/my-applications" className="text-gray-700 hover:text-blue-600 transition-colors">Lịch sử ứng tuyển</Link>
-                    <Link to="/chat" className="text-gray-700 hover:text-blue-600 transition-colors">Tin nhắn</Link> {/* 👈 Thêm dòng này */}
+                    <NavLink to="/user-profile" className={navLinkClass}>
+                      Hồ sơ
+                    </NavLink>
+                    <NavLink to="/cvs" className={navLinkClass}>
+                      CV của tôi
+                    </NavLink>
+                    <NavLink to="/create-cv" className={navLinkClass}>
+                      Tạo CV
+                    </NavLink>
+                    <NavLink to="/my-applications" className={navLinkClass}>
+                      Lịch sử ứng tuyển
+                    </NavLink>
+                    <NavLink to="/chat" className={navLinkClass}>
+                      Tin nhắn
+                    </NavLink>
                   </>
                 )}
 
                 {/* Employer only */}
                 {currentUser.role === 'employer' && (
                   <>
-                    <Link to="/user-profile" className="text-gray-700 hover:text-blue-600 transition-colors">Hồ sơ</Link>
-                    <Link to="/employer-profile" className="text-gray-700 hover:text-blue-600 transition-colors">Hồ sơ công ty</Link>
-                    <Link to="/post-job" className="text-gray-700 hover:text-blue-600 transition-colors">Đăng tin tuyển dụng</Link>
-                    <Link to="/manage-jobs" className="text-gray-700 hover:text-blue-600 transition-colors">Quản lý tin tuyển dụng</Link>
-                    <Link to="/employer/manage-applications" className="text-gray-700 hover:text-blue-600 transition-colors">Quản lý ứng viên</Link>
-                    
+                    <NavLink to="/user-profile" className={navLinkClass}>
+                      Hồ sơ
+                    </NavLink>
+                    <NavLink to="/employer-profile" className={navLinkClass}>
+                      Hồ sơ công ty
+                    </NavLink>
+                    <NavLink to="/post-job" className={navLinkClass}>
+                      Đăng tin tuyển dụng
+                    </NavLink>
+                    <NavLink to="/manage-jobs" className={navLinkClass}>
+                      Quản lý tin tuyển dụng
+                    </NavLink>
+                    <NavLink
+                      to="/employer/manage-applications"
+                      className={navLinkClass}
+                    >
+                      Quản lý ứng viên
+                    </NavLink>
                   </>
                 )}
 
                 {/* Admin only */}
                 {currentUser.role === 'admin' && (
                   <>
-                    <Link to="/user-profile" className="text-gray-700 hover:text-blue-600 transition-colors">Hồ sơ</Link>
-                    <Link to="/admin/users" className="text-gray-700 hover:text-blue-600 transition-colors">Quản lý người dùng</Link>
-                    <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 transition-colors">Dashboard</Link>
+                    <NavLink to="/user-profile" className={navLinkClass}>
+                      Hồ sơ
+                    </NavLink>
+                    <NavLink to="/admin/users" className={navLinkClass}>
+                      Quản lý người dùng
+                    </NavLink>
+                    <NavLink to="/dashboard" className={navLinkClass}>
+                      Dashboard
+                    </NavLink>
                   </>
                 )}
-                {/* Bạn có thể thêm link logout ở đây, hoặc trong phần user-profile dropdown */}
-                {/* Hoặc một liên kết "Hồ sơ" chung cho tất cả các vai trò đã đăng nhập nếu cần */}
-                {/* <Link to="/profile" className="text-gray-700 hover:text-blue-600 transition-colors">Hồ sơ chung</Link> */}
               </>
             )}
           </nav>
         </div>
       </header>
 
+      {/* Nội dung */}
       <main className="container mx-auto px-4 py-6 flex-grow">
         <Outlet />
       </main>
 
-      {/* Hiển thị ChatBox cho employer và applicant */}
-      {currentUser && (currentUser.role === 'applicant' || currentUser.role === 'employer') && (
-        <div className="fixed bottom-4 right-4 z-50">
-          <ChatBox currentUserId={currentUser?._id} /> {/* Không truyền receiverId ở đây nữa */}
-        </div>
-      )}
+      {/* ChatBox */}
+      {currentUser &&
+        (currentUser.role === 'applicant' ||
+          currentUser.role === 'employer') && (
+          <div className="fixed bottom-4 right-4 z-50">
+            <ChatBox currentUserId={currentUser?._id} />
+          </div>
+        )}
 
+      {/* Footer */}
       <footer className="bg-white text-center py-4 border-t text-sm text-gray-500">
         &copy; {new Date().getFullYear()} MyRecruit. All rights reserved.
       </footer>
