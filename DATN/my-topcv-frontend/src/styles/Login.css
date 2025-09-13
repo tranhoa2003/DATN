@@ -1,0 +1,202 @@
+/* ===== Wrapper tổng ===== */
+.login-wrapper {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f9fafb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== CỘT TRÁI (Form) ===== */
+.login-left {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 30px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 40px 35px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s;
+}
+
+.login-box:hover {
+  transform: translateY(-2px);
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00b14f;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ===== Form ===== */
+.login-form .form-group {
+  margin-bottom: 18px;
+}
+
+.login-form label {
+  display: block;
+  font-weight: 500;
+  font-size: 13.5px;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.login-form input:focus {
+  border-color: #00b14f;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 177, 79, 0.25);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background: #00b14f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background 0.25s;
+}
+
+.btn-login:hover {
+  background: #009945;
+}
+
+/* ===== Social ===== */
+.social-login {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-social:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn-social.google { background: #e74c3c; }
+.btn-social.facebook { background: #1877f2; }
+.btn-social.linkedin { background: #0a66c2; }
+
+.register-text {
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+}
+
+.register-text a {
+  color: #00b14f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* ===== CỘT PHẢI (Banner) ===== */
+.login-right {
+  flex: 1.1;
+  background: linear-gradient(rgba(0, 21, 41, 0.6), rgba(10, 42, 67, 0.3)), 
+              url('anhlog.jpeg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 80px;
+  position: relative;
+}
+
+.banner-content {
+  max-width: 480px;
+  text-align: left;
+  z-index: 2;
+  animation: fadeInUp 0.8s ease;
+}
+
+.banner-content h1 {
+  font-size: 42px;
+  line-height: 1.3;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.banner-content p {
+  font-size: 16px;
+  color: #f3f4f6;
+  line-height: 1.6;
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+  .login-right {
+    display: none;
+  }
+  .login-left {
+    flex: 1;
+    padding: 40px 20px;
+  }
+}
