@@ -47,11 +47,13 @@ function App() {
       {/* Bọc toàn bộ Routes bằng ChatProvider */}
       <ChatProvider> {/* */}
         <Routes>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="verify-otp" element={<VerifyOTP />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
-            <Route path="verify-otp" element={<VerifyOTP />} />
+           
+            
             <Route path="jobs" element={<JobList />} />
             <Route path="jobs/:id" element={<JobDetail />} />
 
@@ -73,6 +75,7 @@ function App() {
             <Route path="employer/application/:id" element={<PrivateRoute><ApplicationDetails /></PrivateRoute>} />
             <Route path="/chat" element={<ApplicantChatPage />} />
           </Route>
+           
         </Routes>
       </ChatProvider>
     </>
