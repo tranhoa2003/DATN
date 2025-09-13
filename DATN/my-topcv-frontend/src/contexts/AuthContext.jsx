@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // Đăng ký callback logout cho axios interceptor
     registerLogoutCallback(() => {
-      logout();
+      logout(false); // ❌ Không redirect khi bị 401
     });
 
     const checkAuth = async () => {
@@ -61,11 +61,14 @@ export function AuthProvider({ children }) {
     navigate('/'); // Điều hướng sau khi login thành công
   };
 
-  const logout = () => {
+  // ✅ Thêm tham số redirect (mặc định true)
+  const logout = (redirect = true) => {
     localStorage.removeItem('token');
     delete axiosInstance.defaults.headers.common['Authorization'];
     setCurrentUser(null);
-    navigate('/login'); // Điều hướng sau khi logout
+    if (redirect) {
+      navigate('/login'); // Chỉ redirect khi user click logout
+    }
   };
 
   const value = {
