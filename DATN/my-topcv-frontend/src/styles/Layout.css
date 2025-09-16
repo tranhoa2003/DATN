@@ -151,3 +151,24 @@ body {
     height: 1.5rem; /* Slightly smaller logo on mobile */
   }
 }
+
+
+
+/*  */
+.header-content {
+  display: flex;
+  justify-content: space-between; /* đẩy nav-left sang trái, nav-right sang phải */
+  align-items: center;
+  width: 100%;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,85 @@
+.user-menu {
+  position: relative;
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  object-fit: cover;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  z-index: 1000;
+  overflow-y: auto;   /* ✅ Cho phép cuộn dọc */
+  max-height: 80vh;   /* ✅ Giới hạn chiều cao (80% màn hình) */
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-header {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.menu-email, .menu-id {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+}
+
+.menu-section {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-title {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #444;
+}
+
+.menu-section a,
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-section a:hover,
+.logout-btn:hover {
+  color: #2563eb;
+}
