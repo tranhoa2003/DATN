@@ -4,29 +4,33 @@ import { useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
 import ChatBox from './Chat/ChatBox';
 import '../styles/Layout.css';
+import logo from "../styles/logo.png"; // ✅ import logo
+import UserMenu from "./UserMenu";
 
 export default function Layout() {
   const { currentUser } = useContext(AuthContext);
 
   // Class chung cho NavLink
   const navLinkClass = ({ isActive }) =>
-    `text-gray-700 hover:text-blue-600 transition-colors ${
-      isActive ? 'active' : ''
-    }`;
+    `nav-link transition-colors ${isActive ? 'active' : ''}`; // Sử dụng class 'nav-link' và 'active'
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
-      <header className="bg-white shadow-md py-4">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
-          <h1 className="text-2xl font-bold text-blue-600">
-            <NavLink to="/" className={navLinkClass}>
-              MyRecruit
-            </NavLink>
-          </h1>
+    <div className="app-container"> {/* Sử dụng class chung */}
+      <header className="app-header">
+        <div className="header-content"> {/* Sử dụng class chung */}
+          <div className='nav-left'>
+                      {/* Logo */}
+          <div className="brand flex items-center gap-2">
+            <img src={logo} alt="MyRecruit Logo" className="logo-img" /> {/* Sử dụng class chung */}
+            <span className="brand-text">
+              <NavLink to="/" className={navLinkClass}>
+                MyRecruit
+              </NavLink>
+            </span>
+          </div>
 
           {/* Navbar */}
-          <nav className="space-x-4 text-sm">
+          <nav className="main-nav"> {/* Sử dụng class chung */}
             {/* Always Visible */}
             <NavLink to="/" className={navLinkClass}>
               Trang chủ
@@ -112,11 +116,15 @@ export default function Layout() {
               </>
             )}
           </nav>
+          </div>
+          <div className='nav-right'>
+             {currentUser && <UserMenu />}
+          </div>
         </div>
       </header>
 
       {/* Nội dung */}
-      <main className="container mx-auto px-4 py-6 flex-grow">
+      <main className="main-content"> {/* Sử dụng class chung */}
         <Outlet />
       </main>
 
@@ -124,13 +132,13 @@ export default function Layout() {
       {currentUser &&
         (currentUser.role === 'applicant' ||
           currentUser.role === 'employer') && (
-          <div className="fixed bottom-4 right-4 z-50">
+          <div className="chat-box-wrapper"> {/* Sử dụng class chung */}
             <ChatBox currentUserId={currentUser?._id} />
           </div>
         )}
 
       {/* Footer */}
-      <footer className="bg-white text-center py-4 border-t text-sm text-gray-500">
+      <footer className="app-footer"> {/* Sử dụng class chung */}
         &copy; {new Date().getFullYear()} MyRecruit. All rights reserved.
       </footer>
     </div>
